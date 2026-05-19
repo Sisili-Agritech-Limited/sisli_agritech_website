@@ -1,0 +1,10 @@
+venv/
+old_index.html
+*.py
+__pycache__/
+*.pdf
+*.pptx
+*.docx
+*.xlsx
+*.csv
+*.zip
