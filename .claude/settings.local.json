@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($f = \"c:\\\\Users\\\\opapa\\\\OneDrive\\\\Desktop\\\\Sisili Agritech\\\\sisili_agritech.html\"; [math]::Round\\(\\(Get-Item $f\\).Length / 1KB, 1\\))"
+    ]
+  }
+}

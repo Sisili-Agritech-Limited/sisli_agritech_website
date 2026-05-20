@@ -385,12 +385,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 #mobile-menu.open { opacity: 1; pointer-events: all; }
 .mobile-nav-link {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
   font-weight: 600;
   color: rgba(255,255,255,0.7);
   transition: color 0.2s;
+  padding: 10px 0;
+  display: block;
+  -webkit-tap-highlight-color: transparent;
 }
-.mobile-nav-link:hover { color: var(--white); }
+.mobile-nav-link:hover,
+.mobile-nav-link:active { color: var(--white); }
 .mobile-menu-cta { margin-top: var(--sp-2); }
 
 /* ============================================================
@@ -1433,6 +1437,160 @@ footer {
   margin: var(--sp-3) 0;
 }
 .section-divider.centered { margin-left: auto; margin-right: auto; }
+
+/* ============================================================
+   MOBILE OPTIMISATION  (max-width: 639px)
+   ============================================================ */
+@media (max-width: 639px) {
+
+  /* --- Navigation --- */
+  .nav-inner { height: 70px; }
+  .nav-logo-img { width: 48px; height: 48px; }
+  .nav-wordmark { font-size: 1rem; }
+
+  /* --- Hero --- */
+  #hero { min-height: 100svh; }
+  .hero-inner { padding: 90px var(--sp-3) var(--sp-8); }
+
+  /* Hide the right stats card on mobile — too heavy */
+  .hero-stats-card { display: none; }
+
+  /* Full-width single column hero */
+  .hero-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+
+  .hero-headline { font-size: clamp(2rem, 8vw, 2.8rem); }
+
+  /* Stack CTA buttons vertically */
+  .hero-ctas { flex-direction: column; gap: 12px; }
+  .hero-ctas .btn { width: 100%; justify-content: center; padding: 16px 24px; font-size: 1rem; }
+
+  /* Trust badges — wrap tightly */
+  .hero-trust-badges { gap: 8px; margin-top: var(--sp-3); }
+  .trust-badge { font-size: 0.7rem; padding: 5px 10px; }
+
+  /* --- Sections --- */
+  .section { padding: var(--sp-8) 0; }
+
+  /* --- About image collage — 1 row of 2 on mobile --- */
+  .about-photo-wrap > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .about-photo-wrap > div[style*="grid-template-columns:1fr 1fr"] img {
+    height: 130px !important;
+  }
+
+  /* About snapshot card — 2 columns */
+  .about-highlight-cards { grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+  .highlight-card { padding: var(--sp-2); }
+  .highlight-card .hc-icon { font-size: 1.1rem; }
+  .highlight-card .hc-title { font-size: 0.75rem; }
+  .highlight-card .hc-text { font-size: 0.72rem; }
+
+  /* --- Products: always 2 columns on mobile --- */
+  .grid-4 { grid-template-columns: repeat(2, 1fr) !important; gap: var(--sp-2); }
+  .product-img-wrap { height: 160px; }
+  .product-name { font-size: 0.85rem; }
+  .product-tag { font-size: 0.62rem; }
+  .product-info { padding: var(--sp-2); }
+
+  /* --- SERVICES (What We Do): 2-col compact icon cards --- */
+  #divisions .grid-2 { grid-template-columns: repeat(2, 1fr) !important; gap: var(--sp-2); }
+  .service-card { padding: var(--sp-3); }
+  .service-desc { display: none; }
+  .service-bullets { display: none; }
+  .service-icon { width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 10px; }
+  .service-title { font-size: 0.88rem; margin-bottom: 10px; }
+  .service-link { font-size: 0.78rem; }
+
+  /* --- WHY SISILI: compact numbered list, no body text --- */
+  .diff-text { display: none; }
+  .diff-icon { display: none; }
+  .differentiator-item { padding: var(--sp-2) 0; gap: var(--sp-2); align-items: center; }
+  .diff-number { font-size: 1.8rem; width: 36px; }
+  .diff-title { font-size: 0.92rem; margin-bottom: 0; }
+  /* Credentials: hide descriptions, show names only as compact list */
+  .cred-desc { display: none; }
+  .cred-name { font-size: 0.82rem; }
+  .cred-item { padding: 8px 0; }
+  .credentials-card h3 { font-size: 1rem; }
+
+  /* --- OUR CLIENTS: 2-col compact cards, icon + title only --- */
+  #who-we-serve .grid-4 { grid-template-columns: repeat(2, 1fr) !important; gap: var(--sp-2); }
+  .audience-card { padding: var(--sp-3); }
+  .audience-desc { display: none; }
+  .audience-how { display: none; }
+  .audience-how-text { display: none; }
+  .audience-icon { width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 10px; }
+  .audience-title { font-size: 0.9rem; }
+
+  /* --- Other grid-2 sections --- */
+  .grid-2 { grid-template-columns: 1fr; }
+
+  /* --- Why Sisili --- */
+  .diff-number { font-size: 2rem; width: 44px; }
+  .diff-title { font-size: 1rem; }
+  .differentiator-item { gap: var(--sp-2); padding: var(--sp-3) 0; }
+  .credentials-card { padding: var(--sp-3); }
+
+  /* --- Who We Serve: 1 column on mobile --- */
+  #who-we-serve .grid-4 { grid-template-columns: 1fr !important; }
+  .audience-card { padding: var(--sp-4); }
+
+  /* --- Impact grid: 2 columns --- */
+  .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  .impact-number { font-size: 1.6rem; }
+  .impact-story { padding: var(--sp-5) var(--sp-3); }
+
+  /* --- MVV: 1 column on very small --- */
+  .mvv-cards { grid-template-columns: 1fr; }
+  .mvv-card { padding: var(--sp-4); }
+
+  /* --- Partners: 2 columns --- */
+  .partners-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
+  .partner-badge { padding: var(--sp-3) var(--sp-2); }
+  .partner-badge .partner-icon { font-size: 1.4rem; }
+  .partner-badge .partner-name { font-size: 0.72rem; }
+
+  /* --- Contact --- */
+  .contact-form-wrap { padding: var(--sp-4); }
+  .form-row { grid-template-columns: 1fr; }
+  .form-submit { padding: 14px; font-size: 0.95rem; }
+
+  /* --- Footer --- */
+  .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+
+  /* --- Bigger tap targets for all links --- */
+  .service-link { padding: 8px 0; display: inline-flex; }
+  .nav-cta-btn { padding: 12px 18px; }
+
+  /* --- Back to top button --- */
+  #back-to-top { width: 44px; height: 44px; bottom: var(--sp-3); right: var(--sp-3); }
+
+  /* --- Disable lift hover effects on touch (no hover on mobile) --- */
+  .service-card:hover,
+  .audience-card:hover,
+  .highlight-card:hover,
+  .product-card:hover,
+  .mvv-card:hover,
+  .partner-badge:hover { transform: none; box-shadow: var(--shadow-sm); }
+
+  /* --- Section headers --- */
+  .section-header { margin-bottom: var(--sp-5); }
+  .display-lg { font-size: clamp(1.6rem, 6vw, 2rem); }
+}
+
+/* Tablet tweaks (640px–899px) */
+@media (min-width: 640px) and (max-width: 899px) {
+  .hero-stats-card { padding: var(--sp-3); }
+  .stat-value { font-size: 1.3rem; }
+  .stat-label { font-size: 0.72rem; }
+  .hero-grid { gap: var(--sp-5); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .mvv-cards { grid-template-columns: 1fr; }
+  @media (min-width: 780px) { .mvv-cards { grid-template-columns: repeat(3, 1fr); } }
+  .impact-story { padding: var(--sp-5) var(--sp-4); }
+  #who-we-serve .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* ============================================================
    PRINT STYLES
