@@ -4,6 +4,7 @@ __pycache__/
 old_index.html
 .env
 
+.claude
 .vercel
 *.pdf
 *.pptx
@@ -11,4 +12,5 @@ old_index.html
 *.xlsx
 *.csv
 *.zip
+*.py
 extracted_pitch_text.txt

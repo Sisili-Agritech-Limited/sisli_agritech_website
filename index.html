@@ -249,13 +249,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   top: 0; left: 0; right: 0;
   z-index: 100;
   background: transparent;
-  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease;
   padding: 0 var(--sp-3);
+  border-bottom: 1px solid transparent;
 }
 #navbar.scrolled {
-  background: rgba(255,255,255,0.97);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.08), var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 .nav-inner {
   max-width: var(--max-w);
@@ -407,7 +410,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
    ============================================================ */
 #hero {
   min-height: 100vh;
-  background: var(--green-950);
+  background: linear-gradient(135deg, rgba(26,74,46,0.65), rgba(26,58,138,0.55)), url("assets/images/hero-bg.jpg") no-repeat center top;
+  background-size: cover;
   position: relative;
   display: flex;
   align-items: center;
@@ -523,63 +527,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   margin-top: var(--sp-5);
 }
 
-/* Hero stats card */
-.hero-stats-card {
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: var(--radius-xl);
-  padding: var(--sp-5);
-  opacity: 0;
-  transform: translateY(30px);
-  animation: cardIn 0.9s 0.8s ease forwards;
-}
-@keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
-
-.stats-card-header {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blue-200);
-  margin-bottom: var(--sp-4);
-  padding-bottom: var(--sp-2);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-2) 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.stat-item:last-child { border-bottom: none; }
-.stat-icon {
-  width: 44px; height: 44px;
-  background: rgba(96,165,250,0.15);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  color: var(--blue-200);
-  font-size: 1.1rem;
-}
-.stat-value {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1;
-}
-.stat-label {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.55);
-  margin-top: 2px;
-}
-
 /* Scroll indicator */
 .scroll-indicator {
   position: absolute;
-  bottom: var(--sp-5);
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -593,11 +544,66 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-transform: uppercase;
   animation: scrollBounce 2.5s ease-in-out infinite;
 }
+@media (max-height: 800px), (max-width: 600px) {
+  .scroll-indicator {
+    display: none; /* Hide on small/short screens to prevent overlap */
+  }
+}
 @keyframes scrollBounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(8px); }
 }
 .scroll-indicator svg { width: 24px; height: 24px; }
+
+/* Hero right-column card */
+.hero-card-wrap { display: flex; align-items: flex-start; }
+@media (max-width: 899px) { .hero-card-wrap { display: none; } }
+.hero-card {
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-5);
+  width: 100%;
+}
+.hero-card-overline {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green-200);
+  display: block;
+  margin-bottom: var(--sp-3);
+}
+.hero-card-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.hero-card-item:last-of-type { border-bottom: none; }
+.hero-card-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.10);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.hero-card-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+}
+.hero-card-sub {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+  line-height: 1.4;
+}
 
 /* ============================================================
    STATS STRIP
@@ -607,6 +613,49 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
    ABOUT SECTION
    ============================================================ */
 #about { background: var(--cream); }
+.about-mobile-img { display: none; }
+@media (max-width: 639px) {
+  .about-mobile-img { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: var(--sp-3); }
+}
+
+.about-snapshot {
+  background:
+    linear-gradient(135deg, rgba(38,93,24,0.55) 0%, rgba(8,93,138,0.55) 100%),
+    url('assets/images/farmcard.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius: var(--radius-xl);
+  padding: var(--sp-4);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+/* Bento Box Hover Effect */
+.about-bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 200px 130px;
+  gap: var(--sp-2);
+}
+.bento-item { 
+  cursor: pointer; 
+  border-radius: var(--radius-xl); 
+  overflow: hidden; 
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.bento-item.large { grid-column: 1 / -1; }
+.bento-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover !important;
+  object-position: center;
+  transition: transform 0.6s ease;
+}
+.bento-item:hover .bento-img { transform: scale(1.08); }
+
 .about-photo-wrap {
   position: relative;
   display: inline-block;
@@ -679,39 +728,42 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   opacity: 0.4;
 }
 
-.about-highlight-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); margin-top: var(--sp-4); }
-.highlight-card {
-  background: var(--white);
-  border: 1px solid var(--green-100);
-  border-radius: var(--radius-lg);
-  padding: var(--sp-3);
-  transition: var(--transition);
+.about-pillars { display: flex; flex-direction: column; margin-top: var(--sp-4); }
+.pillar-item {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--green-100);
 }
-.highlight-card:hover {
-  border-color: var(--green-600);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+.pillar-item:last-child { border-bottom: none; }
+.pillar-number {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--green-600);
+  opacity: 0.45;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 44px;
+  padding-top: 2px;
 }
-.highlight-card .hc-icon {
-  font-size: 1.4rem;
-  margin-bottom: 8px;
-}
-.highlight-card .hc-title {
-  font-size: 0.8rem;
+.pillar-title {
+  font-size: 0.92rem;
   font-weight: 700;
-  color: var(--green-800);
-  margin-bottom: 4px;
+  color: var(--charcoal);
+  margin-bottom: 5px;
 }
-.highlight-card .hc-text {
-  font-size: 0.78rem;
+.pillar-text {
+  font-size: 0.82rem;
   color: var(--gray-500);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 /* ============================================================
    SOLUTIONS SECTION
    ============================================================ */
 #solutions { background: var(--white); }
+#divisions { background: var(--green-50); }
 
 .service-card {
   background: var(--white);
@@ -726,20 +778,58 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 3px;
+  height: 4px;
   background: var(--green-800);
-  transform: scaleX(0);
+  transform: scaleX(1);
   transform-origin: left;
-  transition: transform 0.35s ease;
+  transition: height 0.3s ease;
 }
 .service-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-6px);
 }
-.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover::before { height: 6px; }
+
+/* Division-specific accent colours */
+.card-irrigation::before  { background: var(--blue-600); }
+.card-irrigation .service-icon  { background: var(--blue-50);  color: var(--blue-600); }
+
+.card-agriculture::before { background: #d97706; }
+.card-agriculture .service-icon { background: #fef3c7; color: #d97706; }
+
+.card-dairy::before       { background: #0d9488; }
+.card-dairy .service-icon       { background: #f0fdfa; color: #0d9488; }
+
+.card-agritech::before    { background: var(--green-600); }
+.card-agritech .service-icon    { background: var(--green-50); color: var(--green-700); }
+
+/* Service card image */
+.service-card-img {
+  height: 220px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--sp-4);
+  position: relative;
+}
+.service-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+  display: block;
+}
+.service-card-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 70px;
+  background: linear-gradient(to bottom, transparent, var(--white));
+  pointer-events: none;
+}
+.service-card:hover .service-card-img img { transform: scale(1.05); }
 
 .service-icon {
-  width: 52px; height: 52px;
+  width: 48px; height: 48px;
   background: var(--green-50);
   border-radius: var(--radius-lg);
   display: flex; align-items: center; justify-content: center;
@@ -754,8 +844,32 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--charcoal);
-  margin-bottom: var(--sp-2);
+  margin-bottom: 6px;
 }
+.service-audience {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-bottom: var(--sp-2);
+  line-height: 1.4;
+}
+.service-audience strong {
+  font-weight: 700;
+  color: var(--gray-700);
+}
+.service-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-bottom: var(--sp-3);
+}
+.card-irrigation .service-stat  { background: var(--blue-50);  color: var(--blue-900);  border: 1px solid var(--blue-200); }
+.card-agriculture .service-stat { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.card-dairy .service-stat       { background: #f0fdfa; color: #065f46; border: 1px solid #99f6e4; }
+.card-agritech .service-stat    { background: var(--green-50); color: var(--green-900); border: 1px solid var(--green-200); }
 .service-desc {
   font-size: 0.9rem;
   color: var(--gray-500);
@@ -1098,7 +1212,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .product-img-wrap {
   width: 100%;
-  height: 220px;
+  height: 190px;
   overflow: hidden;
   background: var(--gray-100);
   display: block;
@@ -1135,22 +1249,76 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 1rem;
   font-weight: 600;
   color: var(--charcoal);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   line-height: 1.3;
 }
+.product-desc {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  line-height: 1.55;
+  margin-bottom: var(--sp-2);
+}
+#products { background: var(--white); }
+
+/* Product filter tabs */
+.product-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: var(--sp-6);
+}
+.filter-btn {
+  padding: 8px 20px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  background: var(--white);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+.filter-btn:hover { border-color: var(--green-600); color: var(--green-700); }
+.filter-btn.active { background: var(--green-800); border-color: var(--green-800); color: var(--white); }
+.product-card.hidden { display: none; }
+
+/* Product tag colour variants */
+.tag-agriculture { color: #92400e; background: #fef3c7; border-color: #fcd34d; }
+.tag-irrigation  { color: var(--blue-900); background: var(--blue-50); border-color: var(--blue-200); }
+.tag-dairy       { color: #065f46; background: #f0fdfa; border-color: #99f6e4; }
+.tag-solar       { color: #9a3412; background: #fff7ed; border-color: #fed7aa; }
 
 /* ============================================================
    PARTNERS SECTION
    ============================================================ */
 #partners { background: var(--white); }
 
-.partners-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--sp-3);
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  display: flex;
+  padding: var(--sp-2) 0 var(--sp-4);
+  /* Optional fade out at edges */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
-@media (min-width: 640px) { .partners-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 900px) { .partners-grid { grid-template-columns: repeat(4, 1fr); } }
+.marquee-content {
+  display: flex;
+  gap: var(--sp-4);
+  /* The animation moves the content left by 50% continuously */
+  animation: scrollMarquee 35s linear infinite;
+  min-width: 200%; /* Must be wide enough */
+}
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - (var(--sp-4) / 2))); }
+}
 
 .partner-badge {
   background: var(--gray-100);
@@ -1160,6 +1328,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-align: center;
   transition: var(--transition);
   filter: grayscale(60%);
+  width: 240px; /* Fixed width for consistent slide */
+  flex-shrink: 0;
 }
 .partner-badge:hover {
   filter: grayscale(0%);
@@ -1457,9 +1627,6 @@ footer {
   #hero { min-height: 100svh; }
   .hero-inner { padding: 90px var(--sp-3) var(--sp-8); }
 
-  /* Hide the right stats card on mobile — too heavy */
-  .hero-stats-card { display: none; }
-
   /* Full-width single column hero */
   .hero-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
 
@@ -1476,20 +1643,15 @@ footer {
   /* --- Sections --- */
   .section { padding: var(--sp-8) 0; }
 
-  /* --- About image collage — 1 row of 2 on mobile --- */
-  .about-photo-wrap > div[style*="grid-template-columns:1fr 1fr"] {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  .about-photo-wrap > div[style*="grid-template-columns:1fr 1fr"] img {
-    height: 130px !important;
-  }
+  /* --- About: mobile layout --- */
+  .about-bento { display: none; }
+  .about-para-3 { display: none; }
 
-  /* About snapshot card — 2 columns */
-  .about-highlight-cards { grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
-  .highlight-card { padding: var(--sp-2); }
-  .highlight-card .hc-icon { font-size: 1.1rem; }
-  .highlight-card .hc-title { font-size: 0.75rem; }
-  .highlight-card .hc-text { font-size: 0.72rem; }
+  /* About pillars — tighten spacing on mobile */
+  .pillar-item { padding: var(--sp-2) 0; gap: var(--sp-2); }
+  .pillar-number { font-size: 1.3rem; width: 36px; }
+  .pillar-title { font-size: 0.88rem; }
+  .pillar-text { font-size: 0.8rem; }
 
   /* --- Products: always 2 columns on mobile --- */
   .grid-4 { grid-template-columns: repeat(2, 1fr) !important; gap: var(--sp-2); }
@@ -1498,14 +1660,17 @@ footer {
   .product-tag { font-size: 0.62rem; }
   .product-info { padding: var(--sp-2); }
 
-  /* --- SERVICES (What We Do): 2-col compact icon cards --- */
-  #divisions .grid-2 { grid-template-columns: repeat(2, 1fr) !important; gap: var(--sp-2); }
-  .service-card { padding: var(--sp-3); }
-  .service-desc { display: none; }
-  .service-bullets { display: none; }
-  .service-icon { width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 10px; }
-  .service-title { font-size: 0.88rem; margin-bottom: 10px; }
-  .service-link { font-size: 0.78rem; }
+  /* --- SERVICES: single-column image cards on mobile --- */
+  #divisions .grid-2 { grid-template-columns: 1fr; gap: var(--sp-3); }
+  .service-card { padding: var(--sp-4); }
+  .service-card-img { height: 170px; margin-bottom: var(--sp-3); }
+  .service-icon { width: 40px; height: 40px; font-size: 1.1rem; margin-bottom: 8px; }
+  .service-title { font-size: 1rem; margin-bottom: 5px; }
+  .service-audience { font-size: 0.72rem; margin-bottom: 8px; }
+  .service-stat { font-size: 0.7rem; padding: 3px 10px; margin-bottom: var(--sp-2); }
+  .service-desc { font-size: 0.85rem; }
+  .service-bullets li { font-size: 0.8rem; }
+  .service-link { font-size: 0.88rem; font-weight: 700; padding: 8px 0; display: inline-flex; }
 
   /* --- WHY SISILI: compact numbered list, no body text --- */
   .diff-text { display: none; }
@@ -1550,9 +1715,9 @@ footer {
   .mvv-cards { grid-template-columns: 1fr; }
   .mvv-card { padding: var(--sp-4); }
 
-  /* --- Partners: 2 columns --- */
-  .partners-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
-  .partner-badge { padding: var(--sp-3) var(--sp-2); }
+  /* --- Partners: Marquee on mobile --- */
+  .marquee-container { padding: var(--sp-2) 0; }
+  .partner-badge { width: 180px; padding: var(--sp-3) var(--sp-2); }
   .partner-badge .partner-icon { font-size: 1.4rem; }
   .partner-badge .partner-name { font-size: 0.72rem; }
 
@@ -1574,7 +1739,6 @@ footer {
   /* --- Disable lift hover effects on touch (no hover on mobile) --- */
   .service-card:hover,
   .audience-card:hover,
-  .highlight-card:hover,
   .product-card:hover,
   .mvv-card:hover,
   .partner-badge:hover { transform: none; box-shadow: var(--shadow-sm); }
@@ -1586,7 +1750,6 @@ footer {
 
 /* Tablet tweaks (640px–899px) */
 @media (min-width: 640px) and (max-width: 899px) {
-  .hero-stats-card { padding: var(--sp-3); }
   .stat-value { font-size: 1.3rem; }
   .stat-label { font-size: 0.72rem; }
   .hero-grid { gap: var(--sp-5); }
@@ -1685,59 +1848,56 @@ footer {
         </h1>
 
         <p class="hero-subtext">
-          Sisili Agritech empowers East African smallholder farmers through innovative engineering. By integrating mechanization, renewable-powered irrigation, and climate-smart technologies, we transform subsistence farming into resilient, profitable enterprises.
+          We supply, install and support irrigation systems, farm machinery, dairy equipment and agritech solutions — engineered for Kenya's smallholder farmers, cooperatives and county programmes.
         </p>
 
         <div class="hero-trust-badges" aria-label="Accreditations">
           <span class="trust-badge">NEMA Registered</span>
           <span class="trust-badge">EBK Certified</span>
-          <span class="trust-badge">Research-Backed</span>
           <span class="trust-badge">UoN Partner</span>
-          <span class="trust-badge">Est. 2021</span>
         </div>
 
         <div class="hero-ctas">
           <a href="#contact" class="btn btn-gold">Partner With Us</a>
-          <a href="#divisions" class="btn btn-secondary">Explore Services</a>
         </div>
       </div>
 
-      <!-- Right: Stats card -->
-      <aside class="hero-stats-card" aria-label="Key results">
-        <div class="stats-card-header">Proven Results — AAKTP Project</div>
-
-        <div class="stat-item">
-          <div class="stat-icon" aria-hidden="true">⚡</div>
-          <div>
-            <div class="stat-value">58<span style="font-size:1.1rem">%</span></div>
-            <div class="stat-label">Reduction in Levelised Cost of Energy</div>
+      <!-- Right: Floating services card (desktop only) -->
+      <div class="hero-card-wrap" style="align-self: start; padding-top: var(--sp-3);">
+        <div class="hero-card">
+          <span class="hero-card-overline">Our Core Services</span>
+          <div class="hero-card-item">
+            <div class="hero-card-icon">💧</div>
+            <div>
+              <div class="hero-card-title">Irrigation Systems</div>
+              <div class="hero-card-sub">Drip, pivot, sprinkler &amp; greenhouse</div>
+            </div>
           </div>
-        </div>
-
-        <div class="stat-item">
-          <div class="stat-icon" aria-hidden="true">🌍</div>
-          <div>
-            <div class="stat-value">71<span style="font-size:1.1rem">%</span></div>
-            <div class="stat-label">CO₂ reduction vs. diesel systems</div>
+          <div class="hero-card-item">
+            <div class="hero-card-icon">🚜</div>
+            <div>
+              <div class="hero-card-title">Farm Mechanization</div>
+              <div class="hero-card-sub">Land prep, seeding &amp; harvesting equipment</div>
+            </div>
           </div>
-        </div>
-
-        <div class="stat-item">
-          <div class="stat-icon" aria-hidden="true">👨‍🎓</div>
-          <div>
-            <div class="stat-value">50<span style="font-size:1.1rem">+</span></div>
-            <div class="stat-label">Engineers & students trained</div>
+          <div class="hero-card-item">
+            <div class="hero-card-icon">🐄</div>
+            <div>
+              <div class="hero-card-title">Dairy Equipment</div>
+              <div class="hero-card-sub">Milking, cooling &amp; processing machinery</div>
+            </div>
           </div>
-        </div>
-
-        <div class="stat-item">
-          <div class="stat-icon" aria-hidden="true">🏗️</div>
-          <div>
-            <div class="stat-value">KSh 21M</div>
-            <div class="stat-label">Project value delivered</div>
+          <div class="hero-card-item">
+            <div class="hero-card-icon">📡</div>
+            <div>
+              <div class="hero-card-title">Agritech Solutions</div>
+              <div class="hero-card-sub">IoT, automation &amp; smart farm systems</div>
+            </div>
           </div>
+          <a href="#divisions" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:var(--sp-4);">Explore All Services</a>
         </div>
-      </aside>
+      </div>
+
     </div>
   </div>
 
@@ -1754,9 +1914,9 @@ footer {
 <!-- ============================================================
      ABOUT SECTION
      ============================================================ -->
-<section id="about" class="section" style="background:var(--white);" aria-label="About Sisili Agritech">
+<section id="about" class="section" aria-label="About Sisili Agritech">
   <div class="container">
-    <div class="grid-2" style="gap: var(--sp-10);">
+    <div class="grid-2" style="gap: var(--sp-10); align-items: start;">
 
       <!-- Text — company first -->
       <div class="reveal slide-left">
@@ -1765,64 +1925,86 @@ footer {
           <h2 class="display-lg">Kenya's trusted agribusiness products & services company</h2>
           <div class="section-divider"></div>
         </div>
+
+        <!-- Mobile-only: all three images shown between heading and body text -->
+        <div class="about-mobile-img">
+          <img src="assets/images/farm.jpg" alt="Farm landscape" loading="lazy" style="grid-column:1/-1;width:100%;height:150px;object-fit:cover;border-radius:var(--radius-lg);">
+          <img src="assets/images/tractor.jpg" alt="Farm tractor" loading="lazy" style="width:100%;height:100px;object-fit:cover;border-radius:var(--radius-lg);">
+          <img src="assets/images/Meteobot%20Pro.jpg" alt="Meteobot Pro agritech tool" loading="lazy" style="width:100%;height:100px;object-fit:cover;border-radius:var(--radius-lg);">
+        </div>
+
         <p class="body-lg" style="color:var(--gray-500);margin-bottom:var(--sp-3);">
-          Sisili Agritech Ltd is a professionally managed company in the agribusiness and supply chain industry. We supply, install, commission and support high-quality agricultural equipment, irrigation systems, dairy machinery and agritech solutions — serving smallholder farmers, cooperatives, NGOs and county programmes across Kenya.
+          Born from a conviction that Kenya's smallholder farmers deserve access to professional-grade agricultural technology, Sisili Agritech was established in Nairobi in 2021 to close the gap between world-class equipment and the farmers who need it most.
         </p>
-        <p class="body-lg" style="color:var(--gray-500);margin-bottom:var(--sp-4);">
+        <p class="body-lg" style="color:var(--gray-500);margin-bottom:var(--sp-3);">
+          Today we are a professionally managed company in the agribusiness and supply chain industry — supplying, installing, commissioning and supporting agricultural equipment, irrigation systems, dairy machinery and agritech solutions for smallholder farmers, cooperatives, NGOs and county programmes across Kenya.
+        </p>
+        <p class="about-para-3 body-lg" style="color:var(--gray-500);margin-bottom:var(--sp-4);">
           With a national footprint and a dedicated team of experts, we combine field-level experience with research-backed technical rigour to deliver solutions that produce measurable results on the farm.
         </p>
 
-        <div class="about-highlight-cards">
-          <div class="highlight-card reveal fade-up stagger-1">
-            <div class="hc-icon">💧</div>
-            <div class="hc-title">Irrigation Division</div>
-            <div class="hc-text">Drip, pivot, sprinkler & greenhouse systems for all farm sizes</div>
+        <div class="about-pillars">
+          <div class="pillar-item reveal fade-up stagger-1">
+            <div class="pillar-number">01</div>
+            <div>
+              <div class="pillar-title">Certified & Research-Backed</div>
+              <div class="pillar-text">Our EBK-licensed engineers and NEMA-registered experts work alongside the University of Nairobi to deliver solutions grounded in verified science and real field data — not guesswork.</div>
+            </div>
           </div>
-          <div class="highlight-card reveal fade-up stagger-2">
-            <div class="hc-icon">🚜</div>
-            <div class="hc-title">Agriculture Division</div>
-            <div class="hc-text">World-class farm mechanization equipment — supply, training & after-sales</div>
+          <div class="pillar-item reveal fade-up stagger-2">
+            <div class="pillar-number">02</div>
+            <div>
+              <div class="pillar-title">Fully Managed, Every Stage</div>
+              <div class="pillar-text">We go beyond supplying equipment. Our team handles site assessment, technical design, installation, operator training, and ongoing after-sales maintenance — all under one engagement.</div>
+            </div>
           </div>
-          <div class="highlight-card reveal fade-up stagger-3">
-            <div class="hc-icon">🐄</div>
-            <div class="hc-title">Dairy Division</div>
-            <div class="hc-text">Milking, cooling, processing & packaging machinery for dairy value chains</div>
-          </div>
-          <div class="highlight-card reveal fade-up stagger-4">
-            <div class="hc-icon">📡</div>
-            <div class="hc-title">Agritech Division</div>
-            <div class="hc-text">IoT, automation, urban agriculture & smart farm solutions</div>
+          <div class="pillar-item reveal fade-up stagger-3">
+            <div class="pillar-number">03</div>
+            <div>
+              <div class="pillar-title">Built for Kenya's Farmers</div>
+              <div class="pillar-text">Every solution we specify is calibrated for East Africa's diverse agro-ecological conditions. We understand the terrain, the crop cycles, and the unique challenges facing farmers in each region.</div>
+            </div>
           </div>
         </div>
+
       </div>
 
       <!-- Company pillars / stats card -->
       <div class="reveal slide-right" style="display:flex;flex-direction:column;gap:var(--sp-4);">
-        <!-- Image collage using local assets -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);border-radius:var(--radius-xl);overflow:hidden;">
-          <img src="assets/images/Greenhouse-for-roses.jpg" alt="Greenhouse irrigation installation" style="width:100%;height:180px;object-fit:cover;">
-          <img src="assets/images/Center-Pivot.jpg" alt="Center pivot irrigation" style="width:100%;height:180px;object-fit:cover;">
-          <img src="assets/images/Installation-of-Center-Pivot.jpg" alt="Center pivot installation" style="width:100%;height:180px;object-fit:cover;">
-          <img src="assets/images/Apler-Disc-V-Plough.jpg" alt="Farm mechanization equipment" style="width:100%;height:180px;object-fit:cover;">
+        <!-- Asymmetrical Bento Box Image Collage -->
+        <div class="about-bento">
+          <div class="bento-item large">
+            <img class="bento-img" src="assets/images/farm.jpg" alt="Farm landscape overhead view" loading="lazy">
+          </div>
+          <div class="bento-item">
+            <img class="bento-img" src="assets/images/tractor.jpg" alt="Farm tractor performing field preparation" loading="lazy">
+          </div>
+          <div class="bento-item">
+            <img class="bento-img" src="assets/images/Meteobot%20Pro.jpg" alt="Meteobot Pro smart agritech tool" loading="lazy">
+          </div>
         </div>
 
         <!-- Company snapshot card — uses logo green + blue -->
-        <div style="background:linear-gradient(135deg,var(--green-800) 0%,var(--blue-900) 100%);border-radius:var(--radius-xl);padding:var(--sp-4);display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+        <div class="about-snapshot">
           <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--blue-200);">2021</div>
-            <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Founded in Nairobi</div>
+            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--white);">Est. 2021</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.85);">Year founded</div>
           </div>
           <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--blue-200);">4</div>
-            <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Business divisions</div>
+            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--white);"><span class="counter" data-target="4">0</span></div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.85);">Business divisions</div>
           </div>
           <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--sky-200);">EBK</div>
-            <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Licensed engineers</div>
+            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--white);"><span class="counter" data-target="50">0</span>+</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.85);">Professionals trained</div>
           </div>
           <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--sky-200);">NEMA</div>
-            <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Registered experts</div>
+            <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--white);line-height:1.2;">EBK &amp; NEMA</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.85);">Industry accreditations</div>
+          </div>
+          <div style="text-align:center;grid-column:1 / -1;border-top:1px solid rgba(255,255,255,0.15);padding-top:var(--sp-3);">
+            <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--white);"><span class="counter" data-target="30">0</span>+</div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.85);">Projects completed</div>
           </div>
         </div>
       </div>
@@ -1834,79 +2016,91 @@ footer {
 <!-- ============================================================
      DIVISIONS / SERVICES SECTION
      ============================================================ -->
-<section id="divisions" class="section" style="background:var(--green-50);" aria-label="Our Business Divisions">
+<section id="divisions" class="section" aria-label="Our Business Divisions">
   <div class="container">
     <div class="section-header centered reveal fade-in">
       <span class="overline">What We Do</span>
-      <h2 class="display-lg">Four divisions covering every aspect of modern farming</h2>
+      <h2 class="display-lg">Four specialist divisions serving Kenya's farms end-to-end</h2>
       <div class="section-divider centered"></div>
-      <p>Our professional services span technical solutions for agribusiness and technology, market research, teaching and training, equipment sourcing, installation, and maintenance.</p>
+      <p>From irrigation design to dairy commissioning — our four divisions bring world-class equipment, expert installation and ongoing support directly to Kenya's farmers, cooperatives and county programmes.</p>
     </div>
 
     <div class="grid-2">
 
       <!-- Irrigation Division -->
-      <article class="service-card reveal fade-up stagger-1" aria-label="Irrigation Division">
+      <article class="service-card card-irrigation reveal fade-up stagger-1" aria-label="Irrigation Division">
+        <div class="service-card-img">
+          <img src="assets/images/irrigation.jpg" alt="Irrigation system in the field" loading="lazy">
+        </div>
         <div class="service-icon" aria-hidden="true">💧</div>
         <h3 class="service-title">Irrigation Division</h3>
-        <p class="service-desc">Our Irrigation Division handles irrigation systems, installations, and project designs — delivering greenhouse solutions for both small and large scale farming across Kenya.</p>
+        <p class="service-audience"><strong>Ideal for:</strong> Smallholder farmers, cooperatives &amp; large-scale growers</p>
+        <div class="service-stat">6 system types available</div>
+        <p class="service-desc">We design, supply and install irrigation systems for farms of every scale — from smallholder drip setups to large centre-pivot installations and full greenhouse structures.</p>
         <ul class="service-bullets" aria-label="Products and services">
           <li>Pivot (Center Pivot) Irrigation Systems</li>
           <li>Drip Irrigation & PVC Fittings</li>
           <li>Sprinkler Systems</li>
-          <li>Mulch Film & Hydroponics Growing Troughs</li>
           <li>Greenhouse Covers & Structures</li>
-          <li>Water Ponds & Harvesting Structures</li>
         </ul>
-        <a href="#contact" class="service-link" aria-label="Enquire about irrigation">Enquire now →</a>
+        <a href="#contact" class="service-link" aria-label="Enquire about irrigation">Get an irrigation quote →</a>
       </article>
 
       <!-- Agriculture Division -->
-      <article class="service-card reveal fade-up stagger-2" aria-label="Agriculture Division">
+      <article class="service-card card-agriculture reveal fade-up stagger-2" aria-label="Agriculture Division">
+        <div class="service-card-img">
+          <img src="assets/images/agriculture.jpg" alt="Farm mechanization equipment in operation" loading="lazy">
+        </div>
         <div class="service-icon" aria-hidden="true">🚜</div>
         <h3 class="service-title">Agriculture Division</h3>
-        <p class="service-desc">We offer a wide range of appropriate technologies in farm mechanization, representing world-renowned manufacturers. We advise, sell, train, commission and offer after-sales services.</p>
+        <p class="service-audience"><strong>Ideal for:</strong> Smallholder farmers, cooperatives &amp; county programmes</p>
+        <div class="service-stat">Full mechanization cycle covered</div>
+        <p class="service-desc">We represent world-renowned farm mechanization manufacturers — advising, supplying, training, commissioning and supporting equipment that raises productivity at every stage of the farming cycle.</p>
         <ul class="service-bullets">
-          <li>Land Preparation Equipment</li>
-          <li>Soil Preparation Machinery</li>
+          <li>Land & Soil Preparation Equipment</li>
           <li>Seeding & Fertilizer Application</li>
           <li>Maize Choppers & Hay Balers</li>
-          <li>Disc Ploughs & Subsoilers</li>
           <li>Mowers, Hay Rakes & Harvesters</li>
         </ul>
-        <a href="#contact" class="service-link">Enquire now →</a>
+        <a href="#contact" class="service-link">Talk to our agriculture team →</a>
       </article>
 
       <!-- Dairy Division -->
-      <article class="service-card reveal fade-up stagger-3" aria-label="Dairy Division">
+      <article class="service-card card-dairy reveal fade-up stagger-3" aria-label="Dairy Division">
+        <div class="service-card-img">
+          <img src="assets/images/dairy.jpg" alt="Dairy equipment and processing machinery" loading="lazy">
+        </div>
         <div class="service-icon" aria-hidden="true">🐄</div>
         <h3 class="service-title">Dairy Division</h3>
-        <p class="service-desc">We supply, install and commission dairy value addition machinery that is cost-effective and up-to-date with the latest technological trends associated with the dairy value chain.</p>
+        <p class="service-audience"><strong>Ideal for:</strong> Dairy farmers, cooperatives &amp; milk processors</p>
+        <div class="service-stat">Milking to packaging — one partner</div>
+        <p class="service-desc">We supply, install and commission cost-effective dairy value-addition machinery — keeping pace with the latest technological trends across the full dairy value chain.</p>
         <ul class="service-bullets">
           <li>Milking Equipment & Systems</li>
           <li>Milk Cooling & Reception</li>
-          <li>Milk Processing Machinery</li>
-          <li>Packaging Equipment</li>
+          <li>Milk Processing & Packaging</li>
           <li>TMR Mixers (e.g. Kuhn Vertical TMR)</li>
-          <li>After-sales service & commissioning</li>
         </ul>
-        <a href="#contact" class="service-link">Enquire now →</a>
+        <a href="#contact" class="service-link">Talk to our dairy team →</a>
       </article>
 
       <!-- Agritech Division -->
-      <article class="service-card reveal fade-up stagger-4" aria-label="Agritech Division">
+      <article class="service-card card-agritech reveal fade-up stagger-4" aria-label="Agritech Division">
+        <div class="service-card-img">
+          <img src="assets/images/agriteh.jpg" alt="Smart agritech solutions on the farm" loading="lazy">
+        </div>
         <div class="service-icon" aria-hidden="true">📡</div>
         <h3 class="service-title">Agritech Division</h3>
-        <p class="service-desc">We are Kenya's leading providers of agritech services — open for consultation in any related field. We integrate smart technology into farming for higher productivity and lower costs.</p>
+        <p class="service-audience"><strong>Ideal for:</strong> Forward-thinking farmers, NGOs &amp; research institutions</p>
+        <div class="service-stat">IoT · AI · Precision Agriculture</div>
+        <p class="service-desc">We integrate smart technology into farming operations — providing IoT solutions, precision agriculture tools and urban farming systems that drive higher productivity and lower input costs.</p>
         <ul class="service-bullets">
-          <li>IoT & Automation for Farms</li>
-          <li>Urban Agriculture Solutions</li>
-          <li>Artificial Intelligence in Agriculture</li>
-          <li>Drip Irrigation Kits & Smart Greenhouses</li>
-          <li>Farm Machinery & Equipment</li>
-          <li>Transport & Logistics for Farm Outputs</li>
+          <li>IoT Sensors & Farm Automation</li>
+          <li>Weather & Environmental Monitoring</li>
+          <li>Urban & Vertical Farming Solutions</li>
+          <li>Precision Agriculture Consulting</li>
         </ul>
-        <a href="#contact" class="service-link">Enquire now →</a>
+        <a href="#contact" class="service-link">Explore smart farm solutions →</a>
       </article>
 
     </div>
@@ -1916,7 +2110,7 @@ footer {
 <!-- ============================================================
      PRODUCTS SECTION
      ============================================================ -->
-<section id="products" class="section" style="background:var(--white);" aria-label="Our Products">
+<section id="products" class="section" aria-label="Our Products">
   <div class="container">
     <div class="section-header centered reveal fade-in">
       <span class="overline">Our Products</span>
@@ -2121,6 +2315,205 @@ footer {
         <div class="product-info">
           <div class="product-tag">Irrigation</div>
           <h4 class="product-name">Micro Irrigation System</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-3">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20street%20light/all-in-one%20solar%20street%20light.png" alt="All-in-one Solar Street Light" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">All-in-one Solar Street Light</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-4">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20street%20light/solar%20home%20light.png" alt="Solar Home Light" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Home Light</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-1">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20water%20pump%20system/solar%20panel.png" alt="Solar Panel" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Panel</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-2">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/grid%20pump%20range/borewell%20submersible%20pump.png" alt="Borewell Submersible Pump" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Pumps</div>
+          <h4 class="product-name">Borewell Submersible Pump</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-3">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/grid%20pump%20range/monoblock%20pump.png" alt="Monoblock Pump" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Pumps</div>
+          <h4 class="product-name">Monoblock Pump</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-4">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/grid%20pump%20range/self%20priming%20pump.png" alt="Self Priming Pump" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Pumps</div>
+          <h4 class="product-name">Self Priming Pump</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-1">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/controller/Hybrid.png" alt="Hybrid Controller" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Controllers</div>
+          <h4 class="product-name">Hybrid Controller</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-2">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/controller/Blending.png" alt="Blending Controller" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Controllers</div>
+          <h4 class="product-name">Blending Controller</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <!-- NEWLY ADDED REMAINING PRODUCTS -->
+      <div class="product-card reveal fade-up stagger-3">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/controller/controller.png" alt="Pump Controller" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Controllers</div>
+          <h4 class="product-name">Pump Controller</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-4">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/controller/PV%20only.png" alt="PV Only Controller" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Controllers</div>
+          <h4 class="product-name">PV Only Controller</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-1">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/controller/Remo%20float.png" alt="Remo Float" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Controllers</div>
+          <h4 class="product-name">Remo Float</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-2">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/grid%20pump%20range/openwell%20submersible%20pump.png" alt="Openwell Submersible Pump" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Pumps</div>
+          <h4 class="product-name">Openwell Submersible Pump</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-3">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20street%20light/two-in-one%20solar%20street%20light.png" alt="Two-In-One Solar Street Light" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Two-In-One Solar Street Light</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-4">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20water%20pump%20system/Monoblock%20pump.png" alt="Solar Monoblock Pump" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Monoblock Pump</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-1">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20water%20pump%20system/oepnwell%20pump.png" alt="Solar Openwell Pump" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Openwell Pump</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-2">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20water%20pump%20system/solar%20module.png" alt="Solar Module" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Module</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-3">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20water%20pump%20system/solar%20water%20tower.png" alt="Solar Water Tower" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Water Tower</h4>
+          <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal fade-up stagger-4">
+        <div class="product-img-wrap">
+          <img src="assets/images/solar-products/solar%20water%20pump%20system/submersible%20pumps.png" alt="Solar Submersible Pumps" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-tag">Solar Power</div>
+          <h4 class="product-name">Solar Submersible Pumps</h4>
           <a href="#contact" class="service-link" style="font-size:0.8rem;">Enquire →</a>
         </div>
       </div>
@@ -2404,46 +2797,91 @@ footer {
       <p>Sisili's work is strengthened by active partnerships with leading universities, technology firms, and international development networks.</p>
     </div>
 
-    <div class="partners-grid">
-      <div class="partner-badge reveal fade-up stagger-1">
-        <span class="partner-icon" aria-hidden="true">🏫</span>
-        <div class="partner-name">University of Nairobi</div>
-        <div class="partner-country">Kenya</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-2">
-        <span class="partner-icon" aria-hidden="true">🎓</span>
-        <div class="partner-name">Aston University</div>
-        <div class="partner-country">United Kingdom</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-3">
-        <span class="partner-icon" aria-hidden="true">☀️</span>
-        <div class="partner-name">Solargen Technologies</div>
-        <div class="partner-country">East Africa</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-4">
-        <span class="partner-icon" aria-hidden="true">🎓</span>
-        <div class="partner-name">Çukurova University</div>
-        <div class="partner-country">Turkey</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-1">
-        <span class="partner-icon" aria-hidden="true">🌍</span>
-        <div class="partner-name">Global Centre on Adaptation</div>
-        <div class="partner-country">International</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-2">
-        <span class="partner-icon" aria-hidden="true">⚙️</span>
-        <div class="partner-name">Gearbox Pan-African Network</div>
-        <div class="partner-country">Pan-Africa</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-3">
-        <span class="partner-icon" aria-hidden="true">🎓</span>
-        <div class="partner-name">Queen's University</div>
-        <div class="partner-country">Canada</div>
-      </div>
-      <div class="partner-badge reveal fade-up stagger-4">
-        <span class="partner-icon" aria-hidden="true">🏆</span>
-        <div class="partner-name">Volkswagen Foundation</div>
-        <div class="partner-country">Germany</div>
+    <div class="marquee-container reveal fade-in">
+      <div class="marquee-content">
+        <!-- Original 8 badges -->
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">🏫</span>
+          <div class="partner-name">University of Nairobi</div>
+          <div class="partner-country">Kenya</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">🎓</span>
+          <div class="partner-name">Aston University</div>
+          <div class="partner-country">United Kingdom</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">☀️</span>
+          <div class="partner-name">Solargen Technologies</div>
+          <div class="partner-country">East Africa</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">🎓</span>
+          <div class="partner-name">Çukurova University</div>
+          <div class="partner-country">Turkey</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">🌍</span>
+          <div class="partner-name">Global Centre on Adaptation</div>
+          <div class="partner-country">International</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">⚙️</span>
+          <div class="partner-name">Gearbox Pan-African Network</div>
+          <div class="partner-country">Pan-Africa</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">🎓</span>
+          <div class="partner-name">Queen's University</div>
+          <div class="partner-country">Canada</div>
+        </div>
+        <div class="partner-badge">
+          <span class="partner-icon" aria-hidden="true">🏆</span>
+          <div class="partner-name">Volkswagen Foundation</div>
+          <div class="partner-country">Germany</div>
+        </div>
+
+        <!-- Duplicated 8 badges for infinite seamless scroll -->
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">🏫</span>
+          <div class="partner-name">University of Nairobi</div>
+          <div class="partner-country">Kenya</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">🎓</span>
+          <div class="partner-name">Aston University</div>
+          <div class="partner-country">United Kingdom</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">☀️</span>
+          <div class="partner-name">Solargen Technologies</div>
+          <div class="partner-country">East Africa</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">🎓</span>
+          <div class="partner-name">Çukurova University</div>
+          <div class="partner-country">Turkey</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">🌍</span>
+          <div class="partner-name">Global Centre on Adaptation</div>
+          <div class="partner-country">International</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">⚙️</span>
+          <div class="partner-name">Gearbox Pan-African Network</div>
+          <div class="partner-country">Pan-Africa</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">🎓</span>
+          <div class="partner-name">Queen's University</div>
+          <div class="partner-country">Canada</div>
+        </div>
+        <div class="partner-badge" aria-hidden="true">
+          <span class="partner-icon">🏆</span>
+          <div class="partner-name">Volkswagen Foundation</div>
+          <div class="partner-country">Germany</div>
+        </div>
       </div>
     </div>
   </div>
